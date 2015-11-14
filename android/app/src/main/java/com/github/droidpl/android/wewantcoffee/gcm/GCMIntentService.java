@@ -7,8 +7,8 @@ import com.google.android.gms.gcm.GcmListenerService;
 
 public class GCMIntentService extends GcmListenerService {
 
-//	public static final String gcmappuri = "http://gdgdallas-gcmserver.appspot.com/regsave";
-	public static final String ACTION_MESSAGE = "com.example.cloudmessaging.ACTION_MESSAGE";
+	public static final String GCM_URL = "http://droidpl-go.appspot.com/regsave";
+	public static final String ACTION_MESSAGE = "com.github.droidpl.android.wewantcoffee.NOTIFICATION";
 
 
 	@Override
