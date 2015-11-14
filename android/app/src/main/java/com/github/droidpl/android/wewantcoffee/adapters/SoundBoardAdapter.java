@@ -1,4 +1,4 @@
-package com.github.droidpl.android.wewantcoffee.fragments;
+package com.github.droidpl.android.wewantcoffee.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.droidpl.android.wewantcoffee.R;
+import com.github.droidpl.android.wewantcoffee.adapters.SoundBoardAdapter;
 import com.github.droidpl.android.wewantcoffee.model.SoundItem;
 
 /**
