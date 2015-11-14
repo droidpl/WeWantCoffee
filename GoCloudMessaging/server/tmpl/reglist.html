@@ -1,0 +1,12 @@
+<html>
+<body>
+<a href="/regform">Register New Device</a>
+{{range .}}
+	<div>
+	<a href="/delete?RegistrationId={{.RegistrationId}}">Delete</a> | 
+	<a href="/msgform?RegistrationId={{.RegistrationId}}">Send</a> | 
+	{{.Model}}
+	</div>
+{{end}}
+</body>
+</html>
