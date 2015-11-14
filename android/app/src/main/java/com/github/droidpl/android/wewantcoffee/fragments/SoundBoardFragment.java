@@ -1,6 +1,8 @@
 package com.github.droidpl.android.wewantcoffee.fragments;
 
 
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -19,7 +21,8 @@ import com.github.droidpl.android.wewantcoffee.model.SoundItem;
 public class SoundBoardFragment extends Fragment implements SoundBoardAdapter.SoundBoardAdapterListener {
 
     private RecyclerView mRecyclerView;
-    SoundBoardAdapter mAdapter;
+    private SoundBoardAdapter mAdapter;
+    private SoundPool mPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
 
     public static SoundBoardFragment newInstance() {
 
@@ -97,5 +100,13 @@ public class SoundBoardFragment extends Fragment implements SoundBoardAdapter.So
     @Override
     public void onSoundBoardItemClicked(SoundItem item) {
         //PLAY THE SOUND!
+        int soundId = mPool.load(getContext(), item.soundResId, 1);
+        mPool.play(soundId, 1, 1, 1, 0, 1);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPool = null;
     }
 }

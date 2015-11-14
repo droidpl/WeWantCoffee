@@ -25,12 +25,15 @@ public class SoundBoardAdapter extends RecyclerView.Adapter<SoundBoardAdapter.Vi
         this.mListener = mListener;
 
         mSounds = new ArrayList<>();
-        mSounds.add(new SoundItem(R.mipmap.ic_launcher, "One!", R.raw.mario_data));
-        mSounds.add(new SoundItem(R.mipmap.ic_launcher, "Two", R.raw.mario_data));
-        mSounds.add(new SoundItem(R.mipmap.ic_launcher, "3", R.raw.mario_data));
-        mSounds.add(new SoundItem(R.mipmap.ic_launcher, "4", R.raw.mario_data));
-        mSounds.add(new SoundItem(R.mipmap.ic_launcher, "5", R.raw.mario_data));
-        mSounds.add(new SoundItem(R.mipmap.ic_launcher, "6", R.raw.mario_data));
+        mSounds.add(new SoundItem(R.drawable.boo_laugh, "Boo Laugh", R.raw.boo_laugh));
+        mSounds.add(new SoundItem(R.drawable.bowser, "Bowser Grawl!", R.raw.bowser_laugh));
+        mSounds.add(new SoundItem(R.drawable.donkey_kong, "Donkey Kong", R.raw.donkey_kong));
+        mSounds.add(new SoundItem(R.drawable.mario, "Mario, Lets go!", R.raw.mario_lets_a_go));
+        mSounds.add(new SoundItem(R.drawable.peach, "Peach, Bye bye!!", R.raw.peach_bingo_bye_bye));
+        mSounds.add(new SoundItem(R.drawable.luigi, "Luigi Bingo!", R.raw.luigi_bingo));
+        mSounds.add(new SoundItem(R.drawable.mario, "Mario, mamma mia!", R.raw.mario_mamma_mia));
+        mSounds.add(new SoundItem(R.drawable.peach, "Peach, take that!", R.raw.peach_take_that));
+        mSounds.add(new SoundItem(R.drawable.pikachu, "Pikachu!", R.raw.pikachu));
     }
 
     @Override
