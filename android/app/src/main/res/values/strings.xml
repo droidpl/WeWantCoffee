@@ -13,4 +13,7 @@
     <string name="title_level_one">Level 1</string>
     <string name="title_level_two">Level 2</string>
     <string name="title_level_three">Level 3</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="configure">Nickname:</string>
+    <string name="add_widget">Add widget</string>
 </resources>
