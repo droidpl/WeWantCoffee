@@ -16,6 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".CoffeeApplication">
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBs9mQoVbOzXrnRL2baBoeD2Ct3DPhjMv0"/>
+
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_main"
@@ -29,6 +31,7 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+        <activity android:name=".activities.MapFragment"/>
         <service android:name=".gcm.NotificationService"
             android:exported="false">
             <intent-filter>
