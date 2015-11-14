@@ -26,6 +26,7 @@ import java.util.List;
 
 public class SyncCommandActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, SoundBoardAdapter.SoundBoardAdapterListener{
 
+    public static final String PLAY_SOUND_ACTION = "PLAY_SOUND";
     private GoogleApiClient mClient;
     private MessageListener mListener;
     private Message mLastMessage;
@@ -103,6 +104,17 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
     @Override
     public void onSoundBoardItemClicked(SoundItem sound) {
         Toast.makeText(this, sound.name, Toast.LENGTH_SHORT).show();
+        broadcastAction(new Action(PLAY_SOUND_ACTION, sound.name), new ActionCallback() {
+            @Override
+            public void success(Action action) {
+
+            }
+
+            @Override
+            public void error() {
+
+            }
+        });
         playSound(sound.soundResId);
     }
 
@@ -159,12 +171,12 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
                     public void onResult(Status status) {
                         mLastMessage = null;
                         if (status.isSuccess()) {
-                        callback.success(action);
-                    } else {
-                        callback.error();
-                }
-            }
-        });
+                            callback.success(action);
+                        } else {
+                            callback.error();
+                        }
+                    }
+                });
     }
 
 
@@ -176,9 +188,22 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
                 Action action = Action.parse(message);
                 Log.i("Received message", action.toString());
                 //TODO send to someone
+                if(action.mAction.equals(PLAY_SOUND_ACTION)){
+                    int soundId = findSoundIdByName(action.mArguments[0]);
+                    playSound(soundId);
+                }
             }
         };
         Nearby.Messages.subscribe(mClient, mListener);
+    }
+
+    private int findSoundIdByName(String mArgument) {
+        for(SoundItem item : mSounds){
+            if(item.name.equals(mArgument)){
+                return item.soundResId;
+            }
+        }
+        return 0;
     }
 
     @Override
