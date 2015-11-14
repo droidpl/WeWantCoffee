@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.widget.Toast;
 
 import com.github.droidpl.android.syncommand.adapters.SoundBoardAdapter;
 import com.github.droidpl.android.syncommand.model.SoundItem;
@@ -12,14 +13,17 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.nearby.Nearby;
 
+import java.util.List;
+
 
 public class SyncCommandActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, SoundBoardAdapter.SoundBoardAdapterListener{
 
     private GoogleApiClient mClient;
     private boolean mIsConnected;
 
-    RecyclerView mRecyclerView;
-    SoundBoardAdapter mAdapter;
+    private RecyclerView mRecyclerView;
+    private SoundBoardAdapter mAdapter;
+    private List<SoundItem> mSounds;
 
 
     @Override
@@ -28,6 +32,7 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
         setContentView(R.layout.activity_sync_command);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        mSounds = SoundBoardAdapter.getSounds();
         setupRecyclerView();
     }
 
@@ -35,10 +40,10 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
     private void setupRecyclerView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setHasFixedSize(true);
-        mAdapter = new SoundBoardAdapter(this);
+        mAdapter = new SoundBoardAdapter(mSounds, this);
         mRecyclerView.setAdapter(mAdapter);
 
-        ItemTouchHelper.Callback callback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT|ItemTouchHelper.UP|ItemTouchHelper.DOWN, 0) {
+        ItemTouchHelper.Callback callback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP|ItemTouchHelper.DOWN, ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
 
             private RecyclerView.ViewHolder raisedView;
 
@@ -54,7 +59,13 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-
+                SoundItem item = mAdapter.getSoundItem(viewHolder.getAdapterPosition());
+                if(item == null){
+                    //WTF!?
+                    return;
+                }
+                mAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                onSoundBoardItemClicked(item);
             }
 
             @Override
@@ -78,7 +89,7 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
 
     @Override
     public void onSoundBoardItemClicked(SoundItem sound) {
-
+        Toast.makeText(this, sound.name, Toast.LENGTH_SHORT).show();
     }
 
     @Override
