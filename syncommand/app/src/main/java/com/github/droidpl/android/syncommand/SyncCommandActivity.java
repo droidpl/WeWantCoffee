@@ -170,13 +170,15 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
                     @Override
                     public void onResult(Status status) {
                         mLastMessage = null;
-                        if (status.isSuccess()) {
-                            callback.success(action);
-                        } else {
-                            callback.error();
+                        if(callback != null) {
+                            if (status.isSuccess()) {
+                                callback.success(action);
+                            } else {
+                                callback.error();
+                            }
                         }
                     }
-                });
+                 });
     }
 
 
