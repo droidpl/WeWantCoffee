@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.github.droidpl.android.wewantcoffee.R;
+import com.github.droidpl.android.wewantcoffee.fragments.AngularJsFragment;
 import com.github.droidpl.android.wewantcoffee.fragments.SoundBoardFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -87,6 +88,10 @@ public class MainActivity extends AppCompatActivity
         if(id == R.id.sound_board) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.content_fragment, SoundBoardFragment.newInstance());
+            ft.commit();
+        } else if (id == R.id.angular_js) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_fragment, AngularJsFragment.newInstance());
             ft.commit();
         } else if (id == R.id.whatsnext) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

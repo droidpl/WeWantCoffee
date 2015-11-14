@@ -6,6 +6,8 @@
             android:title="What's Next?" />
         <item android:id="@+id/sound_board" android:icon="@android:drawable/ic_menu_gallery"
             android:title="Soundboard" />
+        <item android:id="@+id/angular_js" android:icon="@drawable/ic_angularjs"
+        android:title="AngularJS" />
     </group>
 
 </menu>
