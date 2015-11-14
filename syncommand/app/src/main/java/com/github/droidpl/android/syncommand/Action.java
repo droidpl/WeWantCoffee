@@ -1,5 +1,7 @@
 package com.github.droidpl.android.syncommand;
 
+import android.support.annotation.NonNull;
+
 import com.google.android.gms.nearby.messages.Message;
 
 import java.util.Arrays;
@@ -13,10 +15,14 @@ public class Action {
 
     public static Action parse(Message message){
         String[] items = new String(message.getContent()).split(":");
-        return new Action(items[0], Arrays.copyOfRange(items, 1, items.length));
+        String[] arguments = null;
+        if(items.length > 1) {
+            arguments = Arrays.copyOfRange(items, 1, items.length);
+        }
+        return new Action(items[0], arguments);
     }
 
-    public Action(String action, String[] arguments){
+    public Action(@NonNull String action, String... arguments){
         mAction = action;
         mArguments = arguments;
     }
@@ -25,9 +31,11 @@ public class Action {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append(mAction);
-        for(String value: mArguments){
-            builder.append(":");
-            builder.append(value);
+        if(mArguments != null) {
+            for (String value : mArguments) {
+                builder.append(":");
+                builder.append(value);
+            }
         }
         return builder.toString();
     }

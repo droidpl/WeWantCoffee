@@ -86,7 +86,7 @@ public class DudeFragment extends LocationRequestFragment {
 
             @Override
             public void onFailure(@Nullable Throwable exception) {
-                Log.e("Error", "Cannot register");
+                Log.e("Error", "Cannot receive data: " + exception.toString());
             }
         }).execute();
     }
