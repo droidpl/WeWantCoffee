@@ -3,7 +3,6 @@ package com.github.droidpl.android.wewantcoffee.fragments;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
@@ -43,7 +42,7 @@ public abstract class LocationRequestFragment extends Fragment implements Google
         switch (requestCode) {
             case PERMISSION_REQUEST: {
                 // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0 && allPermissionsPrepared(grantResults)) {
                     onLocationPermissionsPrepare();
                 } else {
                     Toast.makeText(getActivity(), "No permissions to get the updates", Toast.LENGTH_LONG).show();
@@ -53,12 +52,20 @@ public abstract class LocationRequestFragment extends Fragment implements Google
         }
     }
 
+    private boolean allPermissionsPrepared(int[] permissionResults){
+        boolean valid = false;
+        for(int result : permissionResults){
+            valid = valid || result == PackageManager.PERMISSION_GRANTED;
+        }
+        return valid;
+    }
+
     @Override
     public final void onConnected(Bundle bundle) {
         int location = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION);
         int locationFine = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION);
         if(location == PackageManager.PERMISSION_DENIED || locationFine == PackageManager.PERMISSION_DENIED){
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST);
+            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST);
         }else{
             onLocationPermissionsPrepare();
         }
