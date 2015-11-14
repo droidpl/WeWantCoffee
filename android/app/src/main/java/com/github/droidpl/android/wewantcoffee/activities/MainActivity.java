@@ -18,6 +18,7 @@ import com.github.droidpl.android.wewantcoffee.fragments.DudeFragment;
 import com.github.droidpl.android.wewantcoffee.fragments.MobileWebWithWebViewFragment;
 import com.github.droidpl.android.wewantcoffee.fragments.SayWhatFragment;
 import com.github.droidpl.android.wewantcoffee.fragments.SoundBoardFragment;
+import com.github.droidpl.android.wewantcoffee.fragments.WalkieTalkieFragment;
 import com.github.droidpl.android.wewantcoffee.fragments.WhatsNextFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -105,6 +106,10 @@ public class MainActivity extends AppCompatActivity
         } else if(id == R.id.map_with_fuse){
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.content_fragment, MapFragment.newInstance());
+            ft.commit();
+        } else if (id == R.id.walkie_talkie){
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_fragment, WalkieTalkieFragment.newInstance());
             ft.commit();
         }
 
