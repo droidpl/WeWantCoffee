@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
-        <item android:title="Level 1">
+        <item android:title="@string/title_level_one">
             <menu>
                 <item android:id="@+id/whatsnext" android:icon="@android:drawable/ic_menu_agenda"
                     android:title="What's Next?" />
                 <item android:id="@+id/sound_board" android:icon="@android:drawable/ic_menu_gallery"
                     android:title="Soundboard" />
-                <item android:id="@+id/angular_js" android:icon="@drawable/ic_angularjs"
-                    android:title="AngularJS" />
                 <item android:id="@+id/mobile_web_with_web_view" android:icon="@android:drawable/ic_menu_upload"
                     android:title="Mobile Web with WebView" />
+            </menu>
+        </item>
+        <item android:title="@string/title_level_two">
+            <menu>
+                <item android:id="@+id/angular_js" android:icon="@drawable/ic_angularjs"
+                    android:title="AngularJS" />
             </menu>
         </item>
     </group>
