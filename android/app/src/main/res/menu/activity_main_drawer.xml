@@ -29,6 +29,8 @@
                       android:title="Map with fuse" />
                 <item android:id="@+id/notifications" android:icon="@android:drawable/ic_notification_overlay"
                       android:title="GCM Notifications setup" />
+                <item android:id="@+id/walkie_talkie" android:icon="@android:drawable/sym_call_incoming"
+                      android:title="Walkie Talkie" />
             </menu>
         </item>
     </group>

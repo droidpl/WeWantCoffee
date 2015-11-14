@@ -1,23 +1,20 @@
 package com.github.droidpl.android.wewantcoffee.fragments;
 
 
+import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.droidpl.android.wewantcoffee.R;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,6 +65,9 @@ public class SayWhatFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch(requestCode) {
             case REQUEST_SPEECH:
+                if(resultCode != Activity.RESULT_OK ){
+                    return;
+                }
                 ArrayList results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                 Toast.makeText(getActivity(), (String) results.get(0), Toast.LENGTH_LONG).show();
                 break;

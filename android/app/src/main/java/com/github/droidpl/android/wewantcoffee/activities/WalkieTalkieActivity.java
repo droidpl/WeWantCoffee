@@ -3,15 +3,13 @@ package com.github.droidpl.android.wewantcoffee.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.droidpl.android.wewantcoffee.R;
 
@@ -19,6 +17,7 @@ import java.util.ArrayList;
 
 public class WalkieTalkieActivity extends AppCompatActivity {
 
+    public static final String TAG = "WalkieTalkieActivity";
     private String phone;
     private static final int REQUEST_SPEECH = 0;
 
@@ -35,12 +34,20 @@ public class WalkieTalkieActivity extends AppCompatActivity {
         startActivityForResult(i, REQUEST_SPEECH);
 
         phone = getIntent().getStringExtra("phone");
+        Log.d(TAG, "Phone: " + phone);
+        Log.d(TAG, "Intent: " + getIntent());
+        Log.d(TAG, "Extras: " + getIntent().getExtras());
+
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch(requestCode) {
             case REQUEST_SPEECH:
+
+                if(resultCode != RESULT_OK){
+                    return;
+                }
                 ArrayList results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
                 final String speech = (String) results.get(0);
