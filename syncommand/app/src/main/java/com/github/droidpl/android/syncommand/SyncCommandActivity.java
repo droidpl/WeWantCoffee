@@ -1,5 +1,8 @@
 package com.github.droidpl.android.syncommand;
 
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +27,8 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
     private RecyclerView mRecyclerView;
     private SoundBoardAdapter mAdapter;
     private List<SoundItem> mSounds;
+
+    private SoundPool mPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
 
 
     @Override
@@ -90,6 +95,30 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
     @Override
     public void onSoundBoardItemClicked(SoundItem sound) {
         Toast.makeText(this, sound.name, Toast.LENGTH_SHORT).show();
+        playSound(sound.soundResId);
+    }
+
+    private void playSound(final int soundResId){
+        //PLAY THE SOUND!
+        new AsyncTask<Void, Void, Void>(){
+            int soundId;
+            @Override
+            protected Void doInBackground(Void... params) {
+                soundId = mPool.load(getApplicationContext(), soundResId, 1);
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                mPool.play(soundId, 1, 1, 1, 0, 1);
+            }
+        }.execute();
     }
 
     @Override
