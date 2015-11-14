@@ -31,11 +31,7 @@ import java.io.IOException;
 
 public class MapFragment extends LocationRequestFragment implements OnMapReadyCallback {
 
-
-
     private GoogleMap mMap;
-
-
 
     public static Fragment newInstance() {
         return new MapFragment();
@@ -50,6 +46,7 @@ public class MapFragment extends LocationRequestFragment implements OnMapReadyCa
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        getActivity().setTitle("Get fuse location");
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }

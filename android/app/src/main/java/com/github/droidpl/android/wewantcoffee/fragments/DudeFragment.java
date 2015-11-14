@@ -1,5 +1,6 @@
 package com.github.droidpl.android.wewantcoffee.fragments;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,11 +16,12 @@ import com.github.droidpl.android.wewantcoffee.callback.Callback;
 import com.github.droidpl.android.wewantcoffee.model.dude.ApiResult;
 import com.github.droidpl.android.wewantcoffee.model.dude.Step;
 import com.github.droidpl.android.wewantcoffee.tasks.DudeTask;
+import com.google.android.gms.common.ConnectionResult;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DudeFragment extends Fragment {
+public class DudeFragment extends LocationRequestFragment {
 
     private WebView mWebview;
     private ProgressBar mProgress;
@@ -45,9 +47,9 @@ public class DudeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_dude, container, false);
 
-        getViews(view);
+        prepareApi();
 
-        getDirections();
+        getViews(view);
 
         return view;
     }
@@ -57,8 +59,8 @@ public class DudeFragment extends Fragment {
         mProgress = (ProgressBar) view.findViewById(R.id.dude_progress);
     }
 
-    private void getDirections() {
-        new DudeTask(new Callback<ApiResult>() {
+    private void getDirections(Location location) {
+        new DudeTask(location, new Callback<ApiResult>() {
             @Override
             public void onSuccess(@Nullable final ApiResult data) {
                 Log.i("Success", "Received data: " + data.toString());
@@ -90,10 +92,38 @@ public class DudeFragment extends Fragment {
     }
 
     private void showDirections() {
-        mProgress.animate().alpha(0f);
-        mWebview.setAlpha(0f);
-        mWebview.setVisibility(View.VISIBLE);
-        mWebview.animate().alpha(1f);
+        if (mWebview.getVisibility() != View.VISIBLE) {
+            mProgress.animate().alpha(0f);
+            mWebview.setAlpha(0f);
+            mWebview.setVisibility(View.VISIBLE);
+            mWebview.animate().alpha(1f);
+        } else {
+            mProgress.animate().alpha(0f);
+        }
     }
 
+    @Override
+    public void onLocationPermissionsPrepare() {
+        requestLocation();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        showLoading();
+        getDirections(location);
+    }
+
+    private void showLoading() {
+        mProgress.setAlpha(1f);
+    }
 }
