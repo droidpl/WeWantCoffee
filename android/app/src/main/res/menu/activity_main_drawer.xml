@@ -7,8 +7,13 @@
                     android:title="What's Next?" />
                 <item android:id="@+id/sound_board" android:icon="@android:drawable/ic_menu_gallery"
                     android:title="Soundboard" />
+<<<<<<< HEAD
                 <item android:id="@+id/angular_js" android:icon="@drawable/ic_angularjs"
                     android:title="AngularJS" />
+=======
+                <item android:id="@+id/mobile_web_with_web_view" android:icon="@android:drawable/ic_menu_upload"
+                    android:title="Mobile Web with Web View" />
+>>>>>>> c2c6d846fe6d42b34401e14c411e93ab790bb58a
             </menu>
         </item>
     </group>

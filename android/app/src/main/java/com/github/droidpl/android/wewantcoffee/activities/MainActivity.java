@@ -16,6 +16,7 @@ import android.view.View;
 
 import com.github.droidpl.android.wewantcoffee.R;
 import com.github.droidpl.android.wewantcoffee.fragments.AngularJsFragment;
+import com.github.droidpl.android.wewantcoffee.fragments.MobileWebWithWebViewFragment;
 import com.github.droidpl.android.wewantcoffee.fragments.SoundBoardFragment;
 import com.github.droidpl.android.wewantcoffee.fragments.WhatsNextFragment;
 
@@ -97,6 +98,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.whatsnext) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.content_fragment, WhatsNextFragment.newInstance());
+            ft.commit();
+        } else if (id == R.id.mobile_web_with_web_view) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_fragment, MobileWebWithWebViewFragment.newInstance());
             ft.commit();
         }
 
