@@ -19,6 +19,8 @@
                     android:title="AngularJS" />
                 <item android:id="@+id/dude" android:icon="@drawable/ic_navigation_black_24dp"
                     android:title="Dude Where's My House?" />
+                <item android:id="@+id/freebase" android:icon="@drawable/ic_navigation_black_24dp"
+                    android:title="@string/title_freebase" />
             </menu>
         </item>
         <item android:title="@string/title_level_three">

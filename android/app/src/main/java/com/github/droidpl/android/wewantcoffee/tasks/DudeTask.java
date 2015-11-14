@@ -41,7 +41,7 @@ public class DudeTask extends AsyncTask<String, Void, Void> {
     /**
      * Constructor to save the context for the task.
      */
-    public DudeTask(Location location, @NonNull Callback<ApiResult> callback){
+    public DudeTask(@NonNull Location location, @NonNull Callback<ApiResult> callback){
         mLocation = location;
         mCallback = callback;
     }

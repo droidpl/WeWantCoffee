@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 import com.github.droidpl.android.wewantcoffee.R;
 import com.github.droidpl.android.wewantcoffee.fragments.AngularJsFragment;
+import com.github.droidpl.android.wewantcoffee.fragments.FreebaseFragment;
 import com.github.droidpl.android.wewantcoffee.fragments.MapFragment;
 import com.github.droidpl.android.wewantcoffee.fragments.DudeFragment;
 import com.github.droidpl.android.wewantcoffee.fragments.MobileWebWithWebViewFragment;
@@ -105,6 +106,10 @@ public class MainActivity extends AppCompatActivity
         } else if(id == R.id.map_with_fuse){
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.content_fragment, MapFragment.newInstance());
+            ft.commit();
+        } else if(id == R.id.freebase){
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_fragment, FreebaseFragment.newInstance());
             ft.commit();
         }
 
