@@ -49,6 +49,8 @@ public class SoundBoardFragment extends Fragment implements SoundBoardAdapter.So
 
         setupRecyclerView();
 
+        getActivity().setTitle("SoundBoard");
+
         return v;
     }
 
