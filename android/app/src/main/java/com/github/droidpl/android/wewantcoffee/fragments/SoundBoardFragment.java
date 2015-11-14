@@ -3,6 +3,7 @@ package com.github.droidpl.android.wewantcoffee.fragments;
 
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -101,10 +102,29 @@ public class SoundBoardFragment extends Fragment implements SoundBoardAdapter.So
 
 
     @Override
-    public void onSoundBoardItemClicked(SoundItem item) {
+    public void onSoundBoardItemClicked(final SoundItem item) {
+
+
         //PLAY THE SOUND!
-        int soundId = mPool.load(getContext(), item.soundResId, 1);
-        mPool.play(soundId, 1, 1, 1, 0, 1);
+        new AsyncTask<Void, Void, Void>(){
+            int soundId;
+            @Override
+            protected Void doInBackground(Void... params) {
+                soundId = mPool.load(getContext(), item.soundResId, 1);
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                mPool.play(soundId, 1, 1, 1, 0, 1);
+            }
+        }.execute();
     }
 
     @Override
