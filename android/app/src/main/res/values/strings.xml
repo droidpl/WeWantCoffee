@@ -13,4 +13,5 @@
     <string name="title_level_one">Level 1</string>
     <string name="title_level_two">Level 2</string>
     <string name="title_level_three">Level 3</string>
+    <string name="title_activity_walkie_talkie">WalkieTalkieActivity</string>
 </resources>

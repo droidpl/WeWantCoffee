@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.github.droidpl.android.wewantcoffee" >
+    package="com.github.droidpl.android.wewantcoffee">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
@@ -9,51 +9,69 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.github.droidpl.android.wewantcoffee.permission.C2D_MESSAGE"/>
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+    <uses-permission android:name="android.permission.SEND_SMS" />
     <permission android:name="com.github.droidpl.android.wewantcoffee.permission.C2D_MESSAGE" android:protectionLevel="signature"/>
 
     <application
+        android:name=".CoffeeApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".CoffeeApplication">
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBs9mQoVbOzXrnRL2baBoeD2Ct3DPhjMv0"/>
-
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBs9mQoVbOzXrnRL2baBoeD2Ct3DPhjMv0" />
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.github.droidpl.android.wewantcoffee.gcm.OPEN"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="com.github.droidpl.android.wewantcoffee.gcm.OPEN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <service android:name=".gcm.NotificationService"
+        <service
+            android:name=".gcm.NotificationService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
-        <service android:name=".gcm.InstanceIDService"
+        <service
+            android:name=".gcm.InstanceIDService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID"/>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
+
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
             android:permission="com.google.android.c2dm.permission.SEND">
-                <intent-filter>
-                    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                    <category android:name="com.github.droidpl.android.wewantcoffee" />
-               </intent-filter>
-         </receiver>
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="com.github.droidpl.android.wewantcoffee" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".activities.WalkieTalkieActivity"
+            android:label="@string/title_activity_walkie_talkie"
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
