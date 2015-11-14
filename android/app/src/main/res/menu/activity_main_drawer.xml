@@ -2,10 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/whatsnext" android:icon="@android:drawable/ic_menu_agenda"
-            android:title="What's Next?" />
-        <item android:id="@+id/sound_board" android:icon="@android:drawable/ic_menu_gallery"
-            android:title="Soundboard" />
+        <item android:title="Level 1">
+            <menu>
+                <item android:id="@+id/whatsnext" android:icon="@android:drawable/ic_menu_agenda"
+                    android:title="What's Next?" />
+                <item android:id="@+id/sound_board" android:icon="@android:drawable/ic_menu_gallery"
+                    android:title="Soundboard" />
+            </menu>
+        </item>
     </group>
 
 </menu>
