@@ -70,6 +70,8 @@ public abstract class LocationRequestFragment extends Fragment implements Google
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mClient.disconnect();
+        if(mClient != null) {
+            mClient.disconnect();
+        }
     }
 }
