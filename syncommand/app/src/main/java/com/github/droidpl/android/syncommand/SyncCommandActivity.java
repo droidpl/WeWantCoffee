@@ -135,15 +135,6 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
         if (!mClient.isConnected()) {
             mClient.connect();
         }
-        mListener = new MessageListener() {
-            @Override
-            public void onFound(Message message) {
-                Action action = Action.parse(message);
-                Log.i("Received message", action.toString());
-                //TODO send to someone
-            }
-        };
-        Nearby.Messages.subscribe(mClient, mListener);
     }
 
     @Override
@@ -179,6 +170,15 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
 
     @Override
     public void onConnected(Bundle bundle) {
+        mListener = new MessageListener() {
+            @Override
+            public void onFound(Message message) {
+                Action action = Action.parse(message);
+                Log.i("Received message", action.toString());
+                //TODO send to someone
+            }
+        };
+        Nearby.Messages.subscribe(mClient, mListener);
     }
 
     @Override
