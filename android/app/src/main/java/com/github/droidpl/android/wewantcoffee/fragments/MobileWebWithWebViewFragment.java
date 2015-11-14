@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.github.droidpl.android.wewantcoffee.R;
@@ -39,10 +40,13 @@ public class MobileWebWithWebViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        getActivity().setTitle("Mobile Web with WebView");
+
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_mobile_web_with_web_view, container, false);
 
         WebView webview = (WebView) v.findViewById(R.id.wvMobile);
+        webview.setWebViewClient(new WebViewClient());
         webview.loadUrl("http://jqtjs.com/preview/demos/main/");
 
         WebSettings settings = webview.getSettings();

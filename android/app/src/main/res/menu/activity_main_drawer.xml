@@ -10,7 +10,7 @@
                 <item android:id="@+id/angular_js" android:icon="@drawable/ic_angularjs"
                     android:title="AngularJS" />
                 <item android:id="@+id/mobile_web_with_web_view" android:icon="@android:drawable/ic_menu_upload"
-                    android:title="Mobile Web with Web View" />
+                    android:title="Mobile Web with WebView" />
             </menu>
         </item>
     </group>
