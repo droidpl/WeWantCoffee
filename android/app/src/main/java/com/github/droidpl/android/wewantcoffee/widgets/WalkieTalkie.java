@@ -54,7 +54,7 @@ public class WalkieTalkie extends AppWidgetProvider {
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.walkie_talkie);
-        views.setTextViewText(R.id.appwidget_text, widgetText + "\n P: " + phone);
+        views.setTextViewText(R.id.appwidget_text, widgetText);
         views.setOnClickPendingIntent(R.id.appwidget, getPendingIntent(context, phone));
 
         // Instruct the widget manager to update the widget
