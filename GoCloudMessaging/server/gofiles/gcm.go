@@ -48,7 +48,7 @@ func msgsend(w http.ResponseWriter, r *http.Request) {
 	client := urlfetch.Client(c)
 	reqstring := fmt.Sprintf(payload, r.FormValue("Message"), r.FormValue("RegistrationId"))
 	req, err := http.NewRequest("POST", "https://android.googleapis.com/gcm/send", strings.NewReader(reqstring))
-	req.Header.Add("Authorization", "key=AIzaSyAUBMNk774FRfxbrWexGCJFnwSB17yDD6A")
+	req.Header.Add("Authorization", "key=AIzaSyCXPM2A-KYGTlX8nglnzeDIIFsTU_L3Vj0")
 	req.Header.Add("Content-Type", "application/json");
 	res, err := client.Do(req)
 	if err != nil {
@@ -96,7 +96,7 @@ func regsave(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	d := Device{
 		RegistrationId: r.FormValue("RegistrationId"),
-		Model: r.FormValue("Model"), 
+		Model: r.FormValue("Model"),
 		Date: time.Now(),
 	}
 	key := datastore.NewKey(c, "Device", d.RegistrationId, 0, nil)
