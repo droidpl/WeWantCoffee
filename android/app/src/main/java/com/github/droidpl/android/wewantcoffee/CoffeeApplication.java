@@ -3,7 +3,6 @@ package com.github.droidpl.android.wewantcoffee;
 import android.app.Application;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.github.droidpl.android.wewantcoffee.callback.Callback;
 import com.github.droidpl.android.wewantcoffee.gcm.PushInstanceIDTask;
@@ -26,14 +25,14 @@ public class CoffeeApplication extends Application {
 
                     @Override
                     public void onFailure(@Nullable Throwable exception) {
-                        Toast.makeText(CoffeeApplication.this, "Can't register the token", Toast.LENGTH_LONG).show();
+                        Log.e("Error", "Cannot register");
                     }
                 });
             }
 
             @Override
             public void onFailure(@Nullable Throwable exception) {
-                Toast.makeText(CoffeeApplication.this, "Can't register the token", Toast.LENGTH_LONG).show();
+                Log.e("Error", "Cannot register");
             }
         }).execute();
     }
