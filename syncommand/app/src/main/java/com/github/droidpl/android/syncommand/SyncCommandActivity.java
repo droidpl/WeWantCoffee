@@ -182,8 +182,7 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
                             callback.error();
                             if (status.hasResolution()) {
                                 try {
-                                    status.startResolutionForResult(SyncCommandActivity.this,
-                                            1);
+                                    status.startResolutionForResult(SyncCommandActivity.this, 1);
                                 } catch (IntentSender.SendIntentException e) {
                                 }
 
@@ -201,7 +200,6 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
             public void onFound(Message message) {
                 Action action = Action.parse(message);
                 Log.i("Received message", action.toString());
-                //TODO send to someone
                 if (action.mAction.equals(PLAY_SOUND_ACTION)) {
                     int soundId = findSoundIdByName(action.mArguments[0]);
                     playSound(soundId);
