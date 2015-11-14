@@ -1,5 +1,6 @@
 package com.github.droidpl.android.syncommand;
 
+import android.content.IntentSender;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.AsyncTask;
@@ -24,7 +25,7 @@ import com.google.android.gms.nearby.messages.MessageListener;
 import java.util.List;
 
 
-public class SyncCommandActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, SoundBoardAdapter.SoundBoardAdapterListener{
+public class SyncCommandActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, SoundBoardAdapter.SoundBoardAdapterListener {
 
     public static final String PLAY_SOUND_ACTION = "PLAY_SOUND";
     private GoogleApiClient mClient;
@@ -57,7 +58,7 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
         mAdapter = new SoundBoardAdapter(mSounds, this);
         mRecyclerView.setAdapter(mAdapter);
 
-        ItemTouchHelper.Callback callback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP|ItemTouchHelper.DOWN, ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
+        ItemTouchHelper.Callback callback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
             private RecyclerView.ViewHolder raisedView;
 
@@ -74,7 +75,7 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 SoundItem item = mAdapter.getSoundItem(viewHolder.getAdapterPosition());
-                if(item == null){
+                if (item == null) {
                     //WTF!?
                     return;
                 }
@@ -84,11 +85,11 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
 
             @Override
             public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
-                if(actionState == ItemTouchHelper.ACTION_STATE_DRAG){
+                if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
                     viewHolder.itemView.animate().z(25f).start();
                     raisedView = viewHolder;
                 } else {
-                    if(raisedView != null) {
+                    if (raisedView != null) {
                         raisedView.itemView.animate().z(0f).start();
                         raisedView = null;
                     }
@@ -118,10 +119,11 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
         playSound(sound.soundResId);
     }
 
-    private void playSound(final int soundResId){
+    private void playSound(final int soundResId) {
         //PLAY THE SOUND!
-        new AsyncTask<Void, Void, Void>(){
+        new AsyncTask<Void, Void, Void>() {
             int soundId;
+
             @Override
             protected Void doInBackground(Void... params) {
                 soundId = mPool.load(getApplicationContext(), soundResId, 1);
@@ -152,11 +154,11 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
     @Override
     protected void onStop() {
         super.onStop();
-        if(mClient.isConnected()){
-            if(mLastMessage != null) {
+        if (mClient.isConnected()) {
+            if (mLastMessage != null) {
                 Nearby.Messages.unpublish(mClient, mLastMessage).setResultCallback(null);
             }
-            if(mListener != null){
+            if (mListener != null) {
                 Nearby.Messages.unsubscribe(mClient, mListener).setResultCallback(null);
             }
         }
@@ -169,52 +171,62 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
                 .setResultCallback(new ResultCallback<Status>() {
                     @Override
                     public void onResult(Status status) {
-                        mLastMessage = null;
-                        if(callback != null) {
-                            if (status.isSuccess()) {
+                        if (status.isSuccess()) {
+                            mLastMessage = null;
+                            if (callback != null) {
                                 callback.success(action);
-                            } else {
-                                callback.error();
+                            }
+                        } else {
+                            // Currently, the only resolvable error is that the device is not opted
+                            // in to Nearby. Starting the resolution displays an opt-in dialog.
+                            callback.error();
+                            if (status.hasResolution()) {
+                                try {
+                                    status.startResolutionForResult(SyncCommandActivity.this,
+                                            1);
+                                } catch (IntentSender.SendIntentException e) {
+                                }
+
                             }
                         }
                     }
-                 });
-    }
-
-
-    @Override
-    public void onConnected(Bundle bundle) {
-        mListener = new MessageListener() {
-            @Override
-            public void onFound(Message message) {
-                Action action = Action.parse(message);
-                Log.i("Received message", action.toString());
-                //TODO send to someone
-                if(action.mAction.equals(PLAY_SOUND_ACTION)){
-                    int soundId = findSoundIdByName(action.mArguments[0]);
-                    playSound(soundId);
+                    });
                 }
-            }
-        };
-        Nearby.Messages.subscribe(mClient, mListener);
-    }
 
-    private int findSoundIdByName(String mArgument) {
-        for(SoundItem item : mSounds){
-            if(item.name.equals(mArgument)){
-                return item.soundResId;
-            }
-        }
-        return 0;
-    }
 
-    @Override
-    public void onConnectionSuspended(int i) {
+                    @Override
+                    public void onConnected(Bundle bundle) {
+                        mListener = new MessageListener() {
+                            @Override
+                            public void onFound(Message message) {
+                                Action action = Action.parse(message);
+                                Log.i("Received message", action.toString());
+                                //TODO send to someone
+                                if (action.mAction.equals(PLAY_SOUND_ACTION)) {
+                                    int soundId = findSoundIdByName(action.mArguments[0]);
+                                    playSound(soundId);
+                                }
+                            }
+                        };
+                        Nearby.Messages.subscribe(mClient, mListener);
+                    }
 
-    }
+                    private int findSoundIdByName(String mArgument) {
+                        for (SoundItem item : mSounds) {
+                            if (item.name.equals(mArgument)) {
+                                return item.soundResId;
+                            }
+                        }
+                        return 0;
+                    }
 
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
+                    @Override
+                    public void onConnectionSuspended(int i) {
 
-    }
-}
+                    }
+
+                    @Override
+                    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+                    }
+                }
