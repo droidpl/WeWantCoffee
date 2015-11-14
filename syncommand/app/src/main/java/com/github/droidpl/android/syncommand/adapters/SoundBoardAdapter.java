@@ -21,19 +21,9 @@ public class SoundBoardAdapter extends RecyclerView.Adapter<SoundBoardAdapter.Vi
     SoundBoardAdapterListener mListener;
     List<SoundItem> mSounds;
 
-    public SoundBoardAdapter(SoundBoardAdapterListener mListener) {
+    public SoundBoardAdapter(List<SoundItem> soundItems, SoundBoardAdapterListener mListener) {
         this.mListener = mListener;
-
-        mSounds = new ArrayList<>();
-        mSounds.add(new SoundItem(R.drawable.boo_laugh, "Boo Laugh", R.raw.boo_laugh));
-        mSounds.add(new SoundItem(R.drawable.bowser, "Bowser Grawl!", R.raw.bowser_laugh));
-        mSounds.add(new SoundItem(R.drawable.donkey_kong, "Donkey Kong", R.raw.donkey_kong));
-        mSounds.add(new SoundItem(R.drawable.mario, "Mario, Lets go!", R.raw.mario_lets_a_go));
-        mSounds.add(new SoundItem(R.drawable.peach, "Peach, Bye bye!!", R.raw.peach_bingo_bye_bye));
-        mSounds.add(new SoundItem(R.drawable.luigi, "Luigi Bingo!", R.raw.luigi_bingo));
-        mSounds.add(new SoundItem(R.drawable.mario, "Mario, mamma mia!", R.raw.mario_mamma_mia));
-        mSounds.add(new SoundItem(R.drawable.peach, "Peach, take that!", R.raw.peach_take_that));
-        mSounds.add(new SoundItem(R.drawable.pikachu, "Pikachu!", R.raw.pikachu));
+        mSounds = soundItems;
     }
 
     @Override
@@ -53,6 +43,13 @@ public class SoundBoardAdapter extends RecyclerView.Adapter<SoundBoardAdapter.Vi
     @Override
     public int getItemCount() {
         return mSounds != null ? mSounds.size() : 0;
+    }
+
+    public SoundItem getSoundItem(int adapterPosition) {
+        if(mSounds.size() <= adapterPosition){
+            return null;
+        }
+        return mSounds.get(adapterPosition);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -84,5 +81,19 @@ public class SoundBoardAdapter extends RecyclerView.Adapter<SoundBoardAdapter.Vi
 
     public interface SoundBoardAdapterListener{
         void onSoundBoardItemClicked(SoundItem sound);
+    }
+
+    public static List<SoundItem> getSounds(){
+        List<SoundItem> soundItems = new ArrayList<>();
+        soundItems.add(new SoundItem(R.drawable.boo_laugh, "Boo Laugh", R.raw.boo_laugh));
+        soundItems.add(new SoundItem(R.drawable.bowser, "Bowser Grawl!", R.raw.bowser_laugh));
+        soundItems.add(new SoundItem(R.drawable.donkey_kong, "Donkey Kong", R.raw.donkey_kong));
+        soundItems.add(new SoundItem(R.drawable.mario, "Mario, Lets go!", R.raw.mario_lets_a_go));
+        soundItems.add(new SoundItem(R.drawable.peach, "Peach, Bye bye!!", R.raw.peach_bingo_bye_bye));
+        soundItems.add(new SoundItem(R.drawable.luigi, "Luigi Bingo!", R.raw.luigi_bingo));
+        soundItems.add(new SoundItem(R.drawable.mario, "Mario, mamma mia!", R.raw.mario_mamma_mia));
+        soundItems.add(new SoundItem(R.drawable.peach, "Peach, take that!", R.raw.peach_take_that));
+        soundItems.add(new SoundItem(R.drawable.pikachu, "Pikachu!", R.raw.pikachu));
+        return soundItems;
     }
 }

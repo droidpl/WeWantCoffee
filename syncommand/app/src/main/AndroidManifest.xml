@@ -11,7 +11,7 @@
 
         <meta-data
             android:name="com.google.android.nearby.messages.API_KEY"
-            android:value="API_KEY" />
+            android:value="AIzaSyBs9mQoVbOzXrnRL2baBoeD2Ct3DPhjMv0" />
 
         <activity android:name=".SyncCommandActivity" >
             <intent-filter>

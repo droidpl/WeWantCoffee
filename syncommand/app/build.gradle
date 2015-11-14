@@ -11,9 +11,21 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    signingConfigs {
+        both {
+            keyAlias "coffee"
+            storeFile file("app.keystore")
+            storePassword "android"
+            keyPassword "android"
+        }
+    }
     buildTypes {
+        debug {
+            signingConfig signingConfigs.both
+        }
         release {
             minifyEnabled false
+            signingConfig signingConfigs.both
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
