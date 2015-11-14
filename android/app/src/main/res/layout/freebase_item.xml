@@ -5,9 +5,14 @@
     android:background="@android:color/white">
 
     <TextView
-        android:id="@+id/dude_direction_item_textview"
+        android:id="@+id/freebase_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_medium"/>
+
+    <ImageView
+        android:id="@+id/freebase_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
