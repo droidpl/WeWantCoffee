@@ -1,6 +1,9 @@
 package com.github.droidpl.android.wewantcoffee.fragments;
 
 
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.droidpl.android.wewantcoffee.R;
+import com.github.droidpl.android.wewantcoffee.adapters.SoundBoardAdapter;
 import com.github.droidpl.android.wewantcoffee.model.SoundItem;
 
 /**
@@ -19,7 +23,8 @@ import com.github.droidpl.android.wewantcoffee.model.SoundItem;
 public class SoundBoardFragment extends Fragment implements SoundBoardAdapter.SoundBoardAdapterListener {
 
     private RecyclerView mRecyclerView;
-    SoundBoardAdapter mAdapter;
+    private SoundBoardAdapter mAdapter;
+    private SoundPool mPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
 
     public static SoundBoardFragment newInstance() {
 
@@ -45,6 +50,8 @@ public class SoundBoardFragment extends Fragment implements SoundBoardAdapter.So
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerview);
 
         setupRecyclerView();
+
+        getActivity().setTitle("SoundBoard");
 
         return v;
     }
@@ -95,7 +102,34 @@ public class SoundBoardFragment extends Fragment implements SoundBoardAdapter.So
 
 
     @Override
-    public void onSoundBoardItemClicked(SoundItem item) {
+    public void onSoundBoardItemClicked(final SoundItem item) {
+
+
         //PLAY THE SOUND!
+        new AsyncTask<Void, Void, Void>(){
+            int soundId;
+            @Override
+            protected Void doInBackground(Void... params) {
+                soundId = mPool.load(getContext(), item.soundResId, 1);
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                mPool.play(soundId, 1, 1, 1, 0, 1);
+            }
+        }.execute();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPool = null;
     }
 }
