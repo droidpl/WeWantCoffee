@@ -28,6 +28,7 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
 
     private GoogleApiClient mClient;
     private Message mLastMessage;
+    private MessageListener mListener;
 
     private RecyclerView mRecyclerView;
     private SoundBoardAdapter mAdapter;
@@ -39,6 +40,11 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mClient = new GoogleApiClient.Builder(this)
+                .addApi(Nearby.MESSAGES_API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
         setContentView(R.layout.activity_sync_command);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         mSounds = SoundBoardAdapter.getSounds();
@@ -131,14 +137,15 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
         if (!mClient.isConnected()) {
             mClient.connect();
         }
-        Nearby.Messages.subscribe(mClient, new MessageListener() {
+        mListener = new MessageListener() {
             @Override
             public void onFound(Message message) {
                 Action action = Action.parse(message);
                 Log.i("Received message", action.toString());
                 //TODO send to someone
             }
-        });
+        };
+        Nearby.Messages.subscribe(mClient, mListener);
     }
 
     @Override
@@ -148,19 +155,19 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
             if(mLastMessage != null) {
                 Nearby.Messages.unpublish(mClient, mLastMessage).setResultCallback(null);
             }
-            Nearby.Messages.unsubscribe(mClient, this).setResultCallback(null);
+            Nearby.Messages.unsubscribe(mClient, mListener).setResultCallback(null);
         }
         mClient.disconnect();
     }
 
-    public void broadcastAction(final Action action, final ActionCallback callback){
+    public void broadcastAction(final Action action, final ActionCallback callback) {
         mLastMessage = new Message(action.toString().getBytes());
         Nearby.Messages.publish(mClient, mLastMessage)
-            .setResultCallback(new ResultCallback<Status>() {
-                @Override
-                public void onResult(Status status) {
-                    mLastMessage = null;
-                    if (status.isSuccess()) {
+                .setResultCallback(new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                        mLastMessage = null;
+                        if (status.isSuccess()) {
                         callback.success(action);
                     } else {
                         callback.error();
