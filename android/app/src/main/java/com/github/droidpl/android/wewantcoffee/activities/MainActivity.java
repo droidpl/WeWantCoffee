@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.github.droidpl.android.wewantcoffee.R;
+import com.github.droidpl.android.wewantcoffee.fragments.SoundBoardFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -88,7 +89,9 @@ public class MainActivity extends AppCompatActivity
             ft.replace(R.id.content_fragment, SoundBoardFragment.newInstance());
             ft.commit();
         } else if (id == R.id.whatsnext) {
-
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_fragment, SoundBoardFragment.newInstance());
+            ft.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

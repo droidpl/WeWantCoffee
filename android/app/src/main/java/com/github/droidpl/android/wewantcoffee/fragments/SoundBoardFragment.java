@@ -1,4 +1,4 @@
-package com.github.droidpl.android.wewantcoffee.activities;
+package com.github.droidpl.android.wewantcoffee.fragments;
 
 
 import android.os.Bundle;
