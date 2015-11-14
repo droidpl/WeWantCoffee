@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 import com.github.droidpl.android.wewantcoffee.R;
 import com.github.droidpl.android.wewantcoffee.fragments.AngularJsFragment;
+import com.github.droidpl.android.wewantcoffee.fragments.MapFragment;
 import com.github.droidpl.android.wewantcoffee.fragments.MobileWebWithWebViewFragment;
 import com.github.droidpl.android.wewantcoffee.fragments.SayWhatFragment;
 import com.github.droidpl.android.wewantcoffee.fragments.SoundBoardFragment;
