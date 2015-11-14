@@ -13,7 +13,8 @@
             android:name="com.google.android.nearby.messages.API_KEY"
             android:value="AIzaSyBs9mQoVbOzXrnRL2baBoeD2Ct3DPhjMv0" />
 
-        <activity android:name=".SyncCommandActivity" >
+        <activity android:name=".SyncCommandActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
