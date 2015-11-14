@@ -105,7 +105,7 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
     @Override
     public void onSoundBoardItemClicked(SoundItem sound) {
         Toast.makeText(this, sound.name, Toast.LENGTH_SHORT).show();
-        broadcastAction(new Action(PLAY_SOUND_ACTION, sound.name), new ActionCallback() {
+        broadcastAction(new Action(PLAY_SOUND_ACTION, sound.name, "" + System.currentTimeMillis()), new ActionCallback() {
             @Override
             public void success(Action action) {
 
