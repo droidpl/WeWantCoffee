@@ -153,7 +153,6 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
 
     @Override
     protected void onStop() {
-        super.onStop();
         if (mClient.isConnected()) {
             if (mLastMessage != null) {
                 Nearby.Messages.unpublish(mClient, mLastMessage).setResultCallback(null);
@@ -163,6 +162,7 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
             }
         }
         mClient.disconnect();
+        super.onStop();
     }
 
     public void broadcastAction(final Action action, final ActionCallback callback) {
