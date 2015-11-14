@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.github.droidpl.android.wewantcoffee.R;
-import com.github.droidpl.android.wewantcoffee.activities.MainActivity;
+import com.github.droidpl.android.wewantcoffee.activities.WalkieTalkieActivity;
 import com.github.droidpl.android.wewantcoffee.activities.WalkieTalkieConfigureActivity;
 
 /**
@@ -48,20 +48,23 @@ public class WalkieTalkie extends AppWidgetProvider {
     public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
+        String phone = WalkieTalkieConfigureActivity.loadPhonePref(context, appWidgetId);
         CharSequence widgetText = WalkieTalkieConfigureActivity.loadTitlePref(context, appWidgetId);
+
+
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.walkie_talkie);
-        views.setTextViewText(R.id.appwidget_text, widgetText);
-        views.setOnClickPendingIntent(R.id.appwidget, getPendingIntent(context, WalkieTalkieConfigureActivity.loadPhonePref(context, appWidgetId)));
+        views.setTextViewText(R.id.appwidget_text, widgetText + "\n P: " + phone);
+        views.setOnClickPendingIntent(R.id.appwidget, getPendingIntent(context, phone));
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
     public static PendingIntent getPendingIntent(Context c, String phone){
-        Intent intent = new Intent(c, MainActivity.class);
+        Intent intent = new Intent(c, WalkieTalkieActivity.class);
         intent.putExtra("phone", phone);
-        PendingIntent pi = PendingIntent.getActivity(c, 0, intent, 0);
+        PendingIntent pi = PendingIntent.getActivity(c, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         return pi;
     }
 }

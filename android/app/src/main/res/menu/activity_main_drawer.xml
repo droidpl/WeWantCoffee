@@ -17,6 +17,14 @@
             <menu>
                 <item android:id="@+id/angular_js" android:icon="@drawable/ic_angularjs"
                     android:title="AngularJS" />
+                <item android:id="@+id/dude" android:icon="@drawable/ic_navigation_black_24dp"
+                    android:title="Dude Where's My House?" />
+            </menu>
+        </item>
+        <item android:title="@string/title_level_three">
+            <menu>
+                <item android:id="@+id/map_with_fuse" android:icon="@android:drawable/ic_dialog_map"
+                      android:title="Map with fuse" />
             </menu>
         </item>
     </group>

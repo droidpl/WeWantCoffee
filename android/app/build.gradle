@@ -11,9 +11,21 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    signingConfigs {
+        both {
+            keyAlias "coffee"
+            storeFile file("app.keystore")
+            storePassword "android"
+            keyPassword "android"
+        }
+    }
     buildTypes {
+        debug {
+            signingConfig signingConfigs.both
+        }
         release {
             minifyEnabled false
+            signingConfig signingConfigs.both
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -24,7 +36,11 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:design:23.1.1'
     compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.google.android.gms:play-services-gcm:8.3.0'
+    compile 'com.android.support:support-v4:23.1.1'
     compile 'com.squareup.okhttp:okhttp:2.5.0'
-    compile 'com.android.support:recyclerview-v7:+'
+    compile 'com.google.code.gson:gson:2.4'
+    compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'com.google.android.gms:play-services-gcm:8.3.0'
+    compile 'com.google.android.gms:play-services-maps:8.3.0'
+    compile 'com.google.android.gms:play-services-location:8.3.0'
 }

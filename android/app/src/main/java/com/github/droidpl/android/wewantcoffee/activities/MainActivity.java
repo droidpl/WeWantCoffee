@@ -1,9 +1,7 @@
 package com.github.droidpl.android.wewantcoffee.activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,10 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.github.droidpl.android.wewantcoffee.R;
 import com.github.droidpl.android.wewantcoffee.fragments.AngularJsFragment;
+import com.github.droidpl.android.wewantcoffee.fragments.MapFragment;
+import com.github.droidpl.android.wewantcoffee.fragments.DudeFragment;
 import com.github.droidpl.android.wewantcoffee.fragments.MobileWebWithWebViewFragment;
 import com.github.droidpl.android.wewantcoffee.fragments.SayWhatFragment;
 import com.github.droidpl.android.wewantcoffee.fragments.SoundBoardFragment;
@@ -30,15 +29,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -107,6 +97,14 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.mobile_web_with_web_view) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.content_fragment, MobileWebWithWebViewFragment.newInstance());
+            ft.commit();
+        } else if (id == R.id.dude) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_fragment, DudeFragment.newInstance());
+            ft.commit();
+        } else if(id == R.id.map_with_fuse){
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_fragment, MapFragment.newInstance());
             ft.commit();
         }
 

@@ -16,4 +16,8 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="configure">Nickname:</string>
     <string name="add_widget">Add widget</string>
+    <string name="title_activity_walkie_talkie">WalkieTalkieActivity</string>
+
+    <string name="title_dude">Dude Where\'s My House?</string>
+    <string name="title_angular">Angular JS</string>
 </resources>

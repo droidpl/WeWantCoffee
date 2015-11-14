@@ -35,6 +35,8 @@ public class AngularJsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setTitle(R.string.title_angular);
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_angular_js, container, false);
 

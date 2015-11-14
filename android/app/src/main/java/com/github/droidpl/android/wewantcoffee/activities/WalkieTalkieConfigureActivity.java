@@ -24,6 +24,7 @@ import com.github.droidpl.android.wewantcoffee.widgets.WalkieTalkie;
 public class WalkieTalkieConfigureActivity extends Activity {
 
     public static final String TAG = "WalkieTalkie";
+    public static final String PHONE_NOT_SET = "Phone not set";
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     EditText mAppWidgetText;
     TextView mPhoneNumberTextView;
@@ -74,6 +75,7 @@ public class WalkieTalkieConfigureActivity extends Activity {
         }
 
         mAppWidgetText.setText(loadTitlePref(WalkieTalkieConfigureActivity.this, mAppWidgetId));
+        mPhoneNumberTextView.setText(loadPhonePref(WalkieTalkieConfigureActivity.this, mAppWidgetId));
     }
 
     View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -98,16 +100,17 @@ public class WalkieTalkieConfigureActivity extends Activity {
 
     // Write the prefix to the SharedPreferences object for this widget
     static void saveTitlePref(Context context, int appWidgetId, String text, String phone) {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, MODE_WORLD_READABLE).edit();
         prefs.putString(PREF_PREFIX_KEY + appWidgetId, text);
         prefs.putString(PREF_PREFIX_KEY_PHONE + appWidgetId, phone);
+        Log.d(TAG, "Save Phone: " + phone);
         prefs.commit();
     }
 
     // Read the prefix from the SharedPreferences object for this widget.
     // If there is no preference saved, get the default from a resource
     public static String loadTitlePref(Context context, int appWidgetId) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, MODE_WORLD_READABLE);
         String titleValue = prefs.getString(PREF_PREFIX_KEY + appWidgetId, null);
         if (titleValue != null) {
             return titleValue;
@@ -117,17 +120,17 @@ public class WalkieTalkieConfigureActivity extends Activity {
     }
 
     public static String loadPhonePref(Context context, int appWidgetId) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, MODE_WORLD_READABLE);
         String titleValue = prefs.getString(PREF_PREFIX_KEY_PHONE + appWidgetId, null);
         if (titleValue != null) {
             return titleValue;
         } else {
-            return context.getString(R.string.appwidget_text);
+            return PHONE_NOT_SET;
         }
     }
 
     public static void deleteTitlePref(Context context, int appWidgetId) {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, MODE_WORLD_READABLE).edit();
         prefs.remove(PREF_PREFIX_KEY + appWidgetId);
         prefs.commit();
     }
@@ -174,7 +177,7 @@ public class WalkieTalkieConfigureActivity extends Activity {
                             String number = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                             int type = phones.getInt(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
 
-                            if(mPhoneNumberTextView.getText().toString().isEmpty()){
+                            if(mPhoneNumberTextView.getText().toString().isEmpty() || mPhoneNumberTextView.getText().toString().equals(PHONE_NOT_SET)){
                                 mPhoneNumberTextView.setText(number);
                             }
 
