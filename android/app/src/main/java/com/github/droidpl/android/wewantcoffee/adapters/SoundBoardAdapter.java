@@ -82,7 +82,7 @@ public class SoundBoardAdapter extends RecyclerView.Adapter<SoundBoardAdapter.Vi
     }
 
 
-    interface SoundBoardAdapterListener{
+    public interface SoundBoardAdapterListener{
         void onSoundBoardItemClicked(SoundItem sound);
     }
 }
