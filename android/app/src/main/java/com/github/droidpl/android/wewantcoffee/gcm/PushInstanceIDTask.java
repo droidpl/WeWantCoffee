@@ -49,11 +49,10 @@ public class PushInstanceIDTask extends AsyncTask<String, Void, Void> {
     @Override
     protected Void doInBackground (String... params) {
         if(params.length > 0) { //First parameter is the sender id of GCM
-            String gcmSenderId = params[0];
             try {
                 InstanceID instanceID = InstanceID.getInstance(mContext);
                 //Can produce a exception if google play is not installed
-                mToken = instanceID.getToken(gcmSenderId, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+                mToken = instanceID.getToken(Constants.REGISTRATION_ID, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
             } catch (IOException e) {
                 mException = new RuntimeException("Error while retrieving the instance of GCM. " + e.getMessage(), e);
             }
