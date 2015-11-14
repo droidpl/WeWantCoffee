@@ -16,10 +16,10 @@ public class CoffeeApplication extends Application {
 
         new PushInstanceIDTask(this, new Callback<String>() {
             @Override
-            public void onSuccess(@Nullable String data) {
+            public void onSuccess(@Nullable final String data) {
                 GCMWebService.sendRegistrationId(data, new Callback<Void>() {
                     @Override
-                    public void onSuccess(@Nullable Void data) {
+                    public void onSuccess(@Nullable Void ignore) {
                         Log.i("Success", "GCM token registered " + data);
                     }
 

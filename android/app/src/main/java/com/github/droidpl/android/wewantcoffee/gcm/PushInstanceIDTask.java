@@ -48,14 +48,12 @@ public class PushInstanceIDTask extends AsyncTask<String, Void, Void> {
 
     @Override
     protected Void doInBackground (String... params) {
-        if(params.length > 0) { //First parameter is the sender id of GCM
-            try {
-                InstanceID instanceID = InstanceID.getInstance(mContext);
-                //Can produce a exception if google play is not installed
-                mToken = instanceID.getToken(Constants.REGISTRATION_ID, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
-            } catch (IOException e) {
-                mException = new RuntimeException("Error while retrieving the instance of GCM. " + e.getMessage(), e);
-            }
+        try {
+            InstanceID instanceID = InstanceID.getInstance(mContext);
+            //Can produce a exception if google play is not installed
+            mToken = instanceID.getToken(Constants.REGISTRATION_ID, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+        } catch (IOException e) {
+            mException = new RuntimeException("Error while retrieving the instance of GCM. " + e.getMessage(), e);
         }
         return null; // Does not need to resolve with anything
     }
@@ -65,7 +63,7 @@ public class PushInstanceIDTask extends AsyncTask<String, Void, Void> {
         super.onPostExecute(noResult);
         //Propagate the callback
         if(mCallback != null){
-            if(mException == null){
+            if(mException == null && mToken != null){
                 mCallback.onSuccess(mToken);
             } else {
                 mCallback.onFailure(mException);

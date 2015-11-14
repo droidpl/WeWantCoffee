@@ -27,12 +27,16 @@ public class GCMWebService {
             call.enqueue(new com.squareup.okhttp.Callback() {
                 @Override
                 public void onFailure(Request request, IOException e) {
-                    callback.onSuccess(null);
+                    callback.onFailure(null);
                 }
 
                 @Override
                 public void onResponse(Response response) throws IOException {
-                    callback.onFailure(null);
+                    if(response.isSuccessful()) {
+                        callback.onSuccess(null);
+                    }else{
+                        callback.onFailure(null);
+                    }
                 }
             });
         } catch (JSONException e) {
