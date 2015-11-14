@@ -190,43 +190,43 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
                             }
                         }
                     }
-                    });
+                });
+    }
+
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        mListener = new MessageListener() {
+            @Override
+            public void onFound(Message message) {
+                Action action = Action.parse(message);
+                Log.i("Received message", action.toString());
+                //TODO send to someone
+                if (action.mAction.equals(PLAY_SOUND_ACTION)) {
+                    int soundId = findSoundIdByName(action.mArguments[0]);
+                    playSound(soundId);
                 }
+            }
+        };
+        Nearby.Messages.subscribe(mClient, mListener);
+    }
 
+    private int findSoundIdByName(String mArgument) {
+        for (SoundItem item : mSounds) {
+            if (item.name.equals(mArgument)) {
+                return item.soundResId;
+            }
+        }
+        return 0;
+    }
 
-                    @Override
-                    public void onConnected(Bundle bundle) {
-                        mListener = new MessageListener() {
-                            @Override
-                            public void onFound(Message message) {
-                                Action action = Action.parse(message);
-                                Log.i("Received message", action.toString());
-                                //TODO send to someone
-                                if (action.mAction.equals(PLAY_SOUND_ACTION)) {
-                                    int soundId = findSoundIdByName(action.mArguments[0]);
-                                    playSound(soundId);
-                                }
-                            }
-                        };
-                        Nearby.Messages.subscribe(mClient, mListener);
-                    }
+    @Override
+    public void onConnectionSuspended(int i) {
 
-                    private int findSoundIdByName(String mArgument) {
-                        for (SoundItem item : mSounds) {
-                            if (item.name.equals(mArgument)) {
-                                return item.soundResId;
-                            }
-                        }
-                        return 0;
-                    }
+    }
 
-                    @Override
-                    public void onConnectionSuspended(int i) {
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
 
-                    }
-
-                    @Override
-                    public void onConnectionFailed(ConnectionResult connectionResult) {
-
-                    }
-                }
+    }
+}
