@@ -27,15 +27,13 @@ import java.util.List;
 public class SyncCommandActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, SoundBoardAdapter.SoundBoardAdapterListener{
 
     private GoogleApiClient mClient;
-    private Message mLastMessage;
     private MessageListener mListener;
+    private Message mLastMessage;
 
     private RecyclerView mRecyclerView;
     private SoundBoardAdapter mAdapter;
     private List<SoundItem> mSounds;
-
     private SoundPool mPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,7 +153,9 @@ public class SyncCommandActivity extends AppCompatActivity implements GoogleApiC
             if(mLastMessage != null) {
                 Nearby.Messages.unpublish(mClient, mLastMessage).setResultCallback(null);
             }
-            Nearby.Messages.unsubscribe(mClient, mListener).setResultCallback(null);
+            if(mListener != null){
+                Nearby.Messages.unsubscribe(mClient, mListener).setResultCallback(null);
+            }
         }
         mClient.disconnect();
     }
